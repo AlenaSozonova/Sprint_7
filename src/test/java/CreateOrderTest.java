@@ -8,7 +8,6 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
@@ -27,9 +26,9 @@ public class CreateOrderTest {
         List<List<String>> colors = new ArrayList<>();
         colors.add(List.of("BLACK"));
         colors.add(List.of("GREY"));
-        colors.add(List.of("BLACK","GREY"));
+        colors.add(List.of("BLACK", "GREY"));
         colors.add(List.of());
-   return colors;
+        return colors;
     }
 
     OrderClient orderClient = new OrderClient();
@@ -40,8 +39,8 @@ public class CreateOrderTest {
     public void createOrder() {
         Order order = Order.createOrderData(color);
         Response response = orderClient.sendRequestAddOrder(order);
-            response.then().assertThat().statusCode(201)
-                    .and()
-                    .body("track", notNullValue());
+        response.then().assertThat().statusCode(201)
+                .and()
+                .body("track", notNullValue());
     }
 }

@@ -59,7 +59,6 @@ public class LoginCourierTest {
     @DisplayName("Check fail authorization courier with invalid login") // имя теста
     @Description("Checking fail authorization courier with invalid login") // описание теста
     public void authFailCourierWithInvalidLogin() {
-        //courierClient.sendPostRequestCourier(courier);
         Response response = courierClient.returnCourierResponse(new CourierCreds(courier.getLogin() + "/*", courier.getPassword()));
         response.then().assertThat().statusCode(404)
                 .and()

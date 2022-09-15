@@ -4,12 +4,12 @@ public class CourierCreds {
 
     private String password;
 
-    public CourierCreds (String login, String password) {
+    public CourierCreds(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public CourierCreds () {
+    public CourierCreds() {
     }
 
     public String getLogin() {

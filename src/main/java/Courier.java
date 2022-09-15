@@ -1,7 +1,5 @@
 import org.apache.commons.lang3.RandomStringUtils;
 
-import java.util.Random;
-
 public class Courier {
 
     private String login;
@@ -15,11 +13,13 @@ public class Courier {
         this.password = password;
         this.firstName = firstName;
     }
+
     public Courier(String login, String password) {
         this.login = login;
         this.password = password;
     }
-    public static Courier getRandomCourier () {
+
+    public static Courier getRandomCourier() {
         return new Courier(
                 RandomStringUtils.randomAlphanumeric(10),
                 "password",
@@ -34,6 +34,7 @@ public class Courier {
                 RandomStringUtils.randomAlphabetic(10)
         );
     }
+
     public static Courier getRandomCourierWithoutPassword() {
         return new Courier(
                 RandomStringUtils.randomAlphanumeric(10),
@@ -42,7 +43,7 @@ public class Courier {
         );
     }
 
-    public static Courier getRandomCourierWithoutFirstName () {
+    public static Courier getRandomCourierWithoutFirstName() {
         return new Courier(
                 RandomStringUtils.randomAlphanumeric(10),
                 "password",

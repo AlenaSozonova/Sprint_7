@@ -12,9 +12,9 @@ public class Order {
     private String comment;
     private List<String> color;
 
-    public Order (String firstName, String lastName, String address,
-                  int metroStation, String phone, int rentTime,
-                  String deliveryDate, String comment, List<String> color) {
+    public Order(String firstName, String lastName, String address,
+                 int metroStation, String phone, int rentTime,
+                 String deliveryDate, String comment, List<String> color) {
 
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,10 +27,10 @@ public class Order {
         this.color = color;
     }
 
-    public Order () {
+    public Order() {
     }
 
-    public static Order createOrderData (List<String> color) {
+    public static Order createOrderData(List<String> color) {
 
         return new Order(
                 "Акакий",
