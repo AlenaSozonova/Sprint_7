@@ -1,9 +1,9 @@
+package dataModels;
+
 import java.util.List;
 
-public class DataOfOrder {
+public class Order {
 
-    private int id;
-    private int courierId;
     private String firstName;
     private String lastName;
     private String address;
@@ -11,27 +11,40 @@ public class DataOfOrder {
     private String phone;
     private int rentTime;
     private String deliveryDate;
-    private int track;
-    private List<String> color;
     private String comment;
-    private String createdAt;
-    private String updatedAt;
-    private int status;
+    private List<String> color;
 
-    public int getId() {
-        return id;
+    public Order(String firstName, String lastName, String address,
+                 int metroStation, String phone, int rentTime,
+                 String deliveryDate, String comment, List<String> color) {
+
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.metroStation = metroStation;
+        this.phone = phone;
+        this.rentTime = rentTime;
+        this.deliveryDate = deliveryDate;
+        this.comment = comment;
+        this.color = color;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public Order() {
     }
 
-    public int getCourierId() {
-        return courierId;
-    }
+    public static Order createOrderData(List<String> color) {
 
-    public void setCourierId(int courierId) {
-        this.courierId = courierId;
+        return new Order(
+                "Акакий",
+                "Акакиевич",
+                "Мытнинская",
+                4,
+                "+7 800 355 35 35",
+                3,
+                "2020-06-06",
+                "без комментариев",
+                color
+        );
     }
 
     public String getFirstName() {
@@ -90,12 +103,12 @@ public class DataOfOrder {
         this.deliveryDate = deliveryDate;
     }
 
-    public int getTrack() {
-        return track;
+    public String getComment() {
+        return comment;
     }
 
-    public void setTrack(int track) {
-        this.track = track;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public List<String> getColor() {
@@ -105,37 +118,4 @@ public class DataOfOrder {
     public void setColor(List<String> color) {
         this.color = color;
     }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public String getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(String updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-
 }

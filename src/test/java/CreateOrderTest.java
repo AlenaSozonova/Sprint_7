@@ -1,3 +1,5 @@
+import clientApi.OrderClient;
+import dataModels.Order;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
@@ -21,7 +23,7 @@ public class CreateOrderTest {
 
     List<String> color;
 
-    @Parameterized.Parameters
+    @Parameterized.Parameters(name = "Тестовые цвета: {0} {1}")
 
     public static List<List<String>> getColor() {
         List<List<String>> colors = new ArrayList<>();

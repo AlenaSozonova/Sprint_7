@@ -1,3 +1,5 @@
+package dataModels;
+
 public class CourierCreds {
 
     private String login;
