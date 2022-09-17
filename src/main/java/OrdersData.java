@@ -1,11 +1,11 @@
 public class OrdersData {
-    private Data data;
+    private DataOfOrder dataOfOrder;
 
-    public Data getData() {
-        return data;
+    public DataOfOrder getData() {
+        return dataOfOrder;
     }
 
-    public void setData(Data data) {
-        this.data = data;
+    public void setData(DataOfOrder dataOfOrder) {
+        this.dataOfOrder = dataOfOrder;
     }
 }

@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Data {
+public class DataOfOrder {
 
     private int id;
     private int courierId;

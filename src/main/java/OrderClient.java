@@ -1,11 +1,13 @@
+
+import io.qameta.allure.Step;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
 import static io.restassured.RestAssured.given;
 
 public class OrderClient {
-    private final String BASE_URI = "https://qa-scooter.praktikum-services.ru";
-    private final String ORDER = "/api/v1/orders";
+    private static final String BASE_URI = "https://qa-scooter.praktikum-services.ru";
+    private static final String ORDER = "/api/v1/orders";
 
     // базовый
     private RequestSpecification getHeader() {
@@ -14,6 +16,7 @@ public class OrderClient {
                 .header("Content-type", "application/json");
     }
 
+    @Step("Add order")
     public Response sendRequestAddOrder(Order order) {
         return sendPostRequest(order, ORDER);
     }
