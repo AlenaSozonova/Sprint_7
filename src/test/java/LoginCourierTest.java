@@ -1,9 +1,11 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -24,10 +26,9 @@ public class LoginCourierTest {
     public void authCourier() {
         courierClient.sendRequestAddCourier(courier);
         Response response = courierClient.returnCourierResponse(new CourierCreds(courier.getLogin(), courier.getPassword()));
-        response.then().assertThat().statusCode(200)
+        response.then().assertThat().statusCode(SC_OK)
                 .and()
                 .body("id", notNullValue());
-        courierClient.deleteCourier(courier);
     }
 
     // AUTHORIZATION FAIL
@@ -37,10 +38,9 @@ public class LoginCourierTest {
     public void authFailCourierWithoutPassword() {
         courierClient.sendRequestAddCourier(courier);
         Response response = courierClient.returnCourierResponse(new CourierCreds(courier.getLogin(), ""));
-        response.then().assertThat().statusCode(400)
+        response.then().assertThat().statusCode(SC_BAD_REQUEST)
                 .and()
                 .body("message", equalTo("Недостаточно данных для входа"));
-        courierClient.deleteCourier(courier);
     }
 
     @Test
@@ -49,10 +49,9 @@ public class LoginCourierTest {
     public void authFailCourierWithoutLogin() {
         courierClient.sendRequestAddCourier(courier);
         Response response = courierClient.returnCourierResponse(new CourierCreds("", courier.getPassword()));
-        response.then().assertThat().statusCode(400)
+        response.then().assertThat().statusCode(SC_BAD_REQUEST)
                 .and()
                 .body("message", equalTo("Недостаточно данных для входа"));
-        courierClient.deleteCourier(courier);
     }
 
     @Test
@@ -60,7 +59,7 @@ public class LoginCourierTest {
     @Description("Checking fail authorization courier with invalid login") // описание теста
     public void authFailCourierWithInvalidLogin() {
         Response response = courierClient.returnCourierResponse(new CourierCreds(courier.getLogin() + "/*", courier.getPassword()));
-        response.then().assertThat().statusCode(404)
+        response.then().assertThat().statusCode(SC_NOT_FOUND)
                 .and()
                 .body("message", equalTo("Учетная запись не найдена"));
     }
@@ -71,9 +70,16 @@ public class LoginCourierTest {
     public void authFailCourierWithInvalidPassword() {
         courierClient.sendRequestAddCourier(courier);
         Response response = courierClient.returnCourierResponse(new CourierCreds(courier.getLogin(), courier.getPassword() + "/*"));
-        response.then().assertThat().statusCode(404)
+        response.then().assertThat().statusCode(SC_NOT_FOUND)
                 .and()
                 .body("message", equalTo("Учетная запись не найдена"));
-        courierClient.deleteCourier(courier);
+    }
+
+    @After
+    public void teardown() {
+        try {
+            courierClient.deleteCourier(courier);
+        } catch (NullPointerException err) {
+        }
     }
 }

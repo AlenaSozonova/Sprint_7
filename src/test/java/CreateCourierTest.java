@@ -1,9 +1,11 @@
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.equalTo;
 
 public class CreateCourierTest {
@@ -22,10 +24,9 @@ public class CreateCourierTest {
     @Description("Checking add courier with all data") // описание теста
     public void createNewCourier() {
         Response response = courierClient.sendRequestAddCourier(courier);
-        response.then().assertThat().statusCode(201)
+        response.then().assertThat().statusCode(SC_CREATED)
                 .and()
                 .body("ok", equalTo(true));
-        courierClient.deleteCourier(courier);
     }
 
     // Повторное добавление курьера, проверка на существование логина в системе
@@ -35,10 +36,9 @@ public class CreateCourierTest {
     public void createDuplicateCourier() {
         courierClient.sendRequestAddCourier(courier);
         Response response = courierClient.sendRequestAddCourier(courier);
-        response.then().assertThat().statusCode(409)
+        response.then().assertThat().statusCode(SC_CONFLICT)
                 .and()
                 .body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
-        courierClient.deleteCourier(courier);
     }
 
     // ОБЯЗАТЕЛЬНОСТЬ ПОЛЕЙ
@@ -49,7 +49,7 @@ public class CreateCourierTest {
     public void createWithoutLogin() {
         courier = Courier.getRandomCourierWithoutLogin();
         Response response = courierClient.sendRequestAddCourier(courier);
-        response.then().assertThat().statusCode(400)
+        response.then().assertThat().statusCode(SC_BAD_REQUEST)
                 .and()
                 .body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
@@ -61,7 +61,7 @@ public class CreateCourierTest {
     public void createWithoutPassword() {
         courier = Courier.getRandomCourierWithoutPassword();
         Response response = courierClient.sendRequestAddCourier(courier);
-        response.then().assertThat().statusCode(400)
+        response.then().assertThat().statusCode(SC_BAD_REQUEST)
                 .and()
                 .body("message", equalTo("Недостаточно данных для создания учетной записи"));
     }
@@ -73,9 +73,16 @@ public class CreateCourierTest {
     public void createWithoutFirstName() {
         courier = Courier.getRandomCourierWithoutFirstName();
         Response response = courierClient.sendRequestAddCourier(courier);
-        response.then().assertThat().statusCode(201)
+        response.then().assertThat().statusCode(SC_CREATED)
                 .and()
                 .body("ok", equalTo(true));
-        courierClient.deleteCourier(courier);
+    }
+
+    @After
+    public void teardown() {
+        try {
+            courierClient.deleteCourier(courier);
+        } catch (NullPointerException err) {
+           }
     }
 }

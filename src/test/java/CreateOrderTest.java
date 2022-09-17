@@ -8,6 +8,7 @@ import org.junit.runners.Parameterized;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.http.HttpStatus.SC_CREATED;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 @RunWith(Parameterized.class)
@@ -39,7 +40,7 @@ public class CreateOrderTest {
     public void createOrder() {
         Order order = Order.createOrderData(color);
         Response response = orderClient.sendRequestAddOrder(order);
-        response.then().assertThat().statusCode(201)
+        response.then().assertThat().statusCode(SC_CREATED)
                 .and()
                 .body("track", notNullValue());
     }
